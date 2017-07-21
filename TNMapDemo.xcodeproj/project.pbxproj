@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CDEF096FEAE6F30B9B8D4BC8 /* libPods-TNMapDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5080672326ACA4446904B6AF /* libPods-TNMapDemo.a */; };
 		EF3727631F218F7F00A852D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3727621F218F7F00A852D5 /* main.m */; };
 		EF3727661F218F7F00A852D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3727651F218F7F00A852D5 /* AppDelegate.m */; };
 		EF3727691F218F7F00A852D5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3727681F218F7F00A852D5 /* ViewController.m */; };
@@ -35,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5080672326ACA4446904B6AF /* libPods-TNMapDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TNMapDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6134DFAB5D090EA49CD95DC7 /* Pods-TNMapDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TNMapDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TNMapDemo/Pods-TNMapDemo.release.xcconfig"; sourceTree = "<group>"; };
+		BEA70590D82CF271646A81FC /* Pods-TNMapDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TNMapDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TNMapDemo/Pods-TNMapDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		EF37275E1F218F7F00A852D5 /* TNMapDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TNMapDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3727621F218F7F00A852D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EF3727641F218F7F00A852D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDEF096FEAE6F30B9B8D4BC8 /* libPods-TNMapDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E492BCD6842BD18EB3B13A54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5080672326ACA4446904B6AF /* libPods-TNMapDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EDB5B337AA1B6AF14AE2E27F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEA70590D82CF271646A81FC /* Pods-TNMapDemo.debug.xcconfig */,
+				6134DFAB5D090EA49CD95DC7 /* Pods-TNMapDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EF3727551F218F7F00A852D5 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +107,8 @@
 				EF37277A1F218F8000A852D5 /* TNMapDemoTests */,
 				EF3727851F218F8000A852D5 /* TNMapDemoUITests */,
 				EF37275F1F218F7F00A852D5 /* Products */,
+				EDB5B337AA1B6AF14AE2E27F /* Pods */,
+				E492BCD6842BD18EB3B13A54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,9 +171,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF37278B1F218F8000A852D5 /* Build configuration list for PBXNativeTarget "TNMapDemo" */;
 			buildPhases = (
+				2725A52D80A7C55DB97F1D2A /* [CP] Check Pods Manifest.lock */,
 				EF37275A1F218F7F00A852D5 /* Sources */,
 				EF37275B1F218F7F00A852D5 /* Frameworks */,
 				EF37275C1F218F7F00A852D5 /* Resources */,
+				85AC2D5B961A88103CE48AA4 /* [CP] Embed Pods Frameworks */,
+				F4F52D208EFE78DD7AE5D836 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +297,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2725A52D80A7C55DB97F1D2A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		85AC2D5B961A88103CE48AA4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TNMapDemo/Pods-TNMapDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F4F52D208EFE78DD7AE5D836 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TNMapDemo/Pods-TNMapDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF37275A1F218F7F00A852D5 /* Sources */ = {
@@ -427,6 +502,7 @@
 		};
 		EF37278C1F218F8000A852D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEA70590D82CF271646A81FC /* Pods-TNMapDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y4WP38LE9J;
@@ -439,6 +515,7 @@
 		};
 		EF37278D1F218F8000A852D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6134DFAB5D090EA49CD95DC7 /* Pods-TNMapDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y4WP38LE9J;

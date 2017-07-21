@@ -41,5 +41,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSCameraUsageDescription</key>
+    <string>___需要访问您的相机！</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>___为您提供语音服务，需要开启您的麦克风！</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>___需要访问您的相册！</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>请允许开启定位服务，以获取当前位置</string>
 </dict>
 </plist>
