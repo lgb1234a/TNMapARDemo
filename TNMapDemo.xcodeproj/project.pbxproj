@@ -16,6 +16,7 @@
 		EF3727711F218F7F00A852D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF37276F1F218F7F00A852D5 /* LaunchScreen.storyboard */; };
 		EF37277C1F218F8000A852D5 /* TNMapDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF37277B1F218F8000A852D5 /* TNMapDemoTests.m */; };
 		EF3727871F218F8000A852D5 /* TNMapDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3727861F218F8000A852D5 /* TNMapDemoUITests.m */; };
+		EFF8F4DC1F25D2AA00630152 /* ARPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		EF3727821F218F8000A852D5 /* TNMapDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TNMapDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3727861F218F8000A852D5 /* TNMapDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TNMapDemoUITests.m; sourceTree = "<group>"; };
 		EF3727881F218F8000A852D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFF8F4DA1F25D2AA00630152 /* ARPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARPlayViewController.h; sourceTree = "<group>"; };
+		EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARPlayViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				EF3727651F218F7F00A852D5 /* AppDelegate.m */,
 				EF3727671F218F7F00A852D5 /* ViewController.h */,
 				EF3727681F218F7F00A852D5 /* ViewController.m */,
+				EFF8F4DA1F25D2AA00630152 /* ARPlayViewController.h */,
+				EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */,
 				EF37276A1F218F7F00A852D5 /* Main.storyboard */,
 				EF37276D1F218F7F00A852D5 /* Assets.xcassets */,
 				EF37276F1F218F7F00A852D5 /* LaunchScreen.storyboard */,
@@ -352,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF3727691F218F7F00A852D5 /* ViewController.m in Sources */,
+				EFF8F4DC1F25D2AA00630152 /* ARPlayViewController.m in Sources */,
 				EF3727661F218F7F00A852D5 /* AppDelegate.m in Sources */,
 				EF3727631F218F7F00A852D5 /* main.m in Sources */,
 			);
@@ -507,6 +513,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y4WP38LE9J;
 				INFOPLIST_FILE = TNMapDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TN.chenyn.TNMapDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,6 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Y4WP38LE9J;
 				INFOPLIST_FILE = TNMapDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TN.chenyn.TNMapDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -595,6 +603,7 @@
 				EF37278D1F218F8000A852D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF37278E1F218F8000A852D5 /* Build configuration list for PBXNativeTarget "TNMapDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -603,6 +612,7 @@
 				EF3727901F218F8000A852D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF3727911F218F8000A852D5 /* Build configuration list for PBXNativeTarget "TNMapDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -611,6 +621,7 @@
 				EF3727931F218F8000A852D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

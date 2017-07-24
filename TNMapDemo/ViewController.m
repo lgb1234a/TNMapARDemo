@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <MAMapKit/MAMapKit.h>
+#import "ARPlayViewController.h"
 
 @interface ViewController () <MAMapViewDelegate>
 
@@ -39,45 +40,29 @@
 - (void)addAnnotations
 {
     MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-    pointAnnotation.coordinate = CLLocationCoordinate2DMake(32.084861, 118.887380);
+    pointAnnotation.coordinate = CLLocationCoordinate2DMake(32.078761, 118.879280);
     pointAnnotation.title = @"方恒国际";
     pointAnnotation.subtitle = @"阜通东大街6号";
     
     [_mapView addAnnotation:pointAnnotation];
     
-//    [_mapView addAnnotations:@[]];
+//    [_mapView addAnnotations:@[pointAnnotation]];
 }
 
-/**
- * @brief 地图加载成功
- * @param mapView 地图View
- */
-- (void)mapViewDidFinishLoadingMap:(MAMapView *)mapView
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
 {
+//    NSLog(@"mapView返回的定位信息 %lf ---  %lf", _mapView.userLocation.location.coordinate.longitude, _mapView.userLocation.location.coordinate.latitude);
+//    NSLog(@"代理方法返回的位置信息 %lf --- %lf", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
     
-}
-
-- (void)mapViewDidStopLocatingUser:(MAMapView *)mapView
-{
-    
-}
-
-/**
- * @brief 当mapView新添加annotation views时，调用此接口
- * @param mapView 地图View
- * @param views 新添加的annotation views
- */
-- (void)mapView:(MAMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
     //构造圆
     MACircle *circle = [MACircle circleWithCenterCoordinate:_mapView.userLocation.location.coordinate radius:1000];
     
-    NSLog(@"%lf ---  %lf", _mapView.userLocation.location.coordinate.longitude, _mapView.userLocation.location.coordinate.latitude);
     //在地图上添加圆
     [_mapView addOverlay: circle];
     
-//    [self addAnnotations];
+    [self addAnnotations];
 }
+
 
 /**
  * @brief 根据overlay生成对应的Renderer
@@ -87,7 +72,7 @@
  */
 - (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id <MAOverlay>)overlay
 {
-    NSLog(@"%lf ---  %lf", overlay.coordinate.longitude, overlay.coordinate.latitude);
+//    NSLog(@"%lf ---  %lf", overlay.coordinate.longitude, overlay.coordinate.latitude);
     if ([overlay isKindOfClass:[MACircle class]])
     {
         MACircleRenderer *circleRenderer = [[MACircleRenderer alloc] initWithCircle:overlay];
@@ -110,6 +95,15 @@
 //{
 //    
 //}
+
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
+{
+    NSLog(@"点击了大头钉");
+    
+    ARPlayViewController *arP = [ARPlayViewController new];
+    
+    [self presentViewController:arP animated:YES completion:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {
