@@ -77,9 +77,9 @@
     {
         MACircleRenderer *circleRenderer = [[MACircleRenderer alloc] initWithCircle:overlay];
         
-        circleRenderer.lineWidth    = 10.f;
-        circleRenderer.strokeColor  = [UIColor colorWithRed:0.1 green:0.4 blue:1.0 alpha:0.6];
-        circleRenderer.fillColor    = [UIColor colorWithRed:0.1 green:0.4 blue:0.7 alpha:0.5];
+//        circleRenderer.lineWidth    = 10.f;
+//        circleRenderer.strokeColor  = [UIColor colorWithRed:0.1 green:0.4 blue:1.0 alpha:0.6];
+//        circleRenderer.fillColor    = [UIColor colorWithRed:0.1 green:0.4 blue:0.7 alpha:0.5];
         return circleRenderer;
     }
     return nil;

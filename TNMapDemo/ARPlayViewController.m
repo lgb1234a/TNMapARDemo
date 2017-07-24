@@ -8,6 +8,7 @@
 
 #import "ARPlayViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import <CoreMotion/CoreMotion.h>
 
 @interface ARPlayViewController ()
 
@@ -26,6 +27,8 @@
 
 @property (nonatomic, strong) UIView *bView;
 
+@property (nonatomic, strong) CMMotionManager *motionManager;
+
 @end
 #define kMainScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -40,6 +43,7 @@
     
     [self initAVCaptureSession];
     [self addSwitchButton];
+    [self configCoreMotionManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -61,6 +65,33 @@
     // Dispose of any resources that can be recreated.
     
 }
+
+- (void)configCoreMotionManager
+{
+    //初始化全局管理对象
+    self.motionManager = [[CMMotionManager alloc] init];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //判断陀螺仪可不可以，判断陀螺仪是不是开启
+    if ([self.motionManager isGyroAvailable]){
+        
+        //告诉manager，更新频率是100Hz
+        self.motionManager.gyroUpdateInterval = 0.01;
+        //Push方式获取和处理数据
+        [self.motionManager startGyroUpdatesToQueue:queue
+                             withHandler:^(CMGyroData *gyroData, NSError *error)
+         {
+             NSLog(@"Gyro Rotation x = %.04f", gyroData.rotationRate.x);
+             NSLog(@"Gyro Rotation y = %.04f", gyroData.rotationRate.y);
+             NSLog(@"Gyro Rotation z = %.04f", gyroData.rotationRate.z);
+         }];
+    }
+    
+    if([self.motionManager isAccelerometerAvailable]){
+        
+    }
+}
+
+
 
 - (void)initAVCaptureSession{
     
