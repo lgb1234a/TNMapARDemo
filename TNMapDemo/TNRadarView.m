@@ -60,6 +60,12 @@
 - (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion
 {
     NSLog(@"roll角度：%.4f, pitch角度：%.4f, yaw角度：%.4f", DEGREES(motion.attitude.roll), DEGREES(motion.attitude.pitch), DEGREES(motion.attitude.yaw));
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // yaw角度为零的时候，就是出生点位置
+        self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+        self.radarBackImgView.transform = CGAffineTransformMakeRotation(motion.attitude.yaw);
+    });
 }
 
 
