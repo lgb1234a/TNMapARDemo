@@ -29,10 +29,6 @@
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) TNRadarView *radarView;
 
-@property (nonatomic, strong) CMMotionManager *motionManager;
-
-@property (nonatomic, assign) id<ARPlayViewControllerDelegate> delegate;
-
 @end
 #define kMainScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -47,7 +43,6 @@
     [self addSwitchButton];
     [self addBackButton];
     [self addRadarView];
-    [self configCoreMotionManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -68,27 +63,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
-}
-
-- (void)configCoreMotionManager
-{
-    //初始化全局管理对象
-    self.motionManager = [[CMMotionManager alloc] init];
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    //判断陀螺仪可不可以，判断陀螺仪是不是开启
-    if ([self.motionManager isGyroAvailable]){
-        
-        //告诉manager，更新频率是100Hz
-        self.motionManager.gyroUpdateInterval = 1;
-        //Push方式获取和处理数据
-        [self.motionManager startDeviceMotionUpdatesToQueue:queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
-            
-            if(self.delegate && [self.delegate respondsToSelector:@selector(updateRadarStatuWithDeviceMotion:)])
-            {
-                [self.delegate updateRadarStatuWithDeviceMotion:motion];
-            }
-        }];
-    }
 }
 
 
@@ -146,8 +120,6 @@
 {
     _radarView = [[TNRadarView alloc] initWithFrame:CGRectMake(kMainScreenWidth - 65, 20, 62, 62)];
     [_bView addSubview:_radarView];
-    
-    self.delegate = _radarView;
 }
 
 - (void)back

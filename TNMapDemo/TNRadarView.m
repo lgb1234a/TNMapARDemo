@@ -7,12 +7,14 @@
 //
 
 #import "TNRadarView.h"
-#import "ARPlayViewController.h"
+#import <CoreMotion/CoreMotion.h>
 
-@interface TNRadarView() <ARPlayViewControllerDelegate>
+@interface TNRadarView()
 
 @property (nonatomic, strong) UIImageView *radarBackImgView;
 @property (nonatomic, strong) UIView *dotView;
+
+@property (nonatomic, strong) CMMotionManager *motionManager;
 
 @end
 
@@ -30,8 +32,28 @@
         _dotView.layer.cornerRadius = 1.0f;
         _dotView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_dotView];
+        
+        [self configCoreMotionManager];
     }
     return self;
+}
+
+- (void)configCoreMotionManager
+{
+    //初始化全局管理对象
+    self.motionManager = [[CMMotionManager alloc] init];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //判断陀螺仪可不可以，判断陀螺仪是不是开启
+    if ([self.motionManager isGyroAvailable]){
+        
+        //告诉manager，更新频率是100Hz
+        self.motionManager.gyroUpdateInterval = 1;
+        //Push方式获取和处理数据
+        __weak typeof(self) weafSelf = self;
+        [self.motionManager startDeviceMotionUpdatesToQueue:queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
+            [weafSelf updateRadarStatuWithDeviceMotion:motion];
+        }];
+    }
 }
 
 - (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion
@@ -49,7 +71,7 @@
     double zTheta = atan2(gravityZ,sqrtf(gravityX*gravityX+gravityY*gravityY))/M_PI*180.0;
     double xyTheta = atan2(gravityX,gravityY)/M_PI*180.0;
     
-    NSLog(@"水平倾角：%.4f，旋转角度：%.4f", zTheta, xyTheta);
+    NSLog(@"旋转角度：%.4f 水平倾角：%.4f，旋转角度：%.4f", motion.attitude.roll, zTheta, xyTheta);
 }
 
 

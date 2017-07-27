@@ -7,13 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreMotion/CoreMotion.h>
-
-@protocol ARPlayViewControllerDelegate <NSObject>
-
-- (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion;
-
-@end
 
 @interface ARPlayViewController : UIViewController
 
