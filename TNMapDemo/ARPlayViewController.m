@@ -8,7 +8,7 @@
 
 #import "ARPlayViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import <CoreMotion/CoreMotion.h>
+#import "TNRadarView.h"
 
 @interface ARPlayViewController ()
 
@@ -26,8 +26,12 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer* previewLayer;
 
 @property (nonatomic, strong) UIView *bView;
+@property (nonatomic, strong) UIButton *backBtn;
+@property (nonatomic, strong) TNRadarView *radarView;
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
+
+@property (nonatomic, assign) id<ARPlayViewControllerDelegate> delegate;
 
 @end
 #define kMainScreenWidth [UIScreen mainScreen].bounds.size.width
@@ -39,10 +43,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    self.view.backgroundColor = [UIColor whiteColor];
-    
     [self initAVCaptureSession];
     [self addSwitchButton];
+    [self addBackButton];
+    [self addRadarView];
     [self configCoreMotionManager];
 }
 
@@ -75,22 +79,17 @@
     if ([self.motionManager isGyroAvailable]){
         
         //告诉manager，更新频率是100Hz
-        self.motionManager.gyroUpdateInterval = 0.01;
+        self.motionManager.gyroUpdateInterval = 1;
         //Push方式获取和处理数据
-        [self.motionManager startGyroUpdatesToQueue:queue
-                             withHandler:^(CMGyroData *gyroData, NSError *error)
-         {
-             NSLog(@"Gyro Rotation x = %.04f", gyroData.rotationRate.x);
-             NSLog(@"Gyro Rotation y = %.04f", gyroData.rotationRate.y);
-             NSLog(@"Gyro Rotation z = %.04f", gyroData.rotationRate.z);
-         }];
-    }
-    
-    if([self.motionManager isAccelerometerAvailable]){
-        
+        [self.motionManager startDeviceMotionUpdatesToQueue:queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
+            
+            if(self.delegate && [self.delegate respondsToSelector:@selector(updateRadarStatuWithDeviceMotion:)])
+            {
+                [self.delegate updateRadarStatuWithDeviceMotion:motion];
+            }
+        }];
     }
 }
-
 
 
 - (void)initAVCaptureSession{
@@ -134,6 +133,28 @@
     [self.view addSubview:_bView];
 }
 
+- (void)addBackButton
+{
+    _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _backBtn.frame = CGRectMake(10, 30, 80, 30);
+    [_backBtn setTitle:@"<back" forState:UIControlStateNormal];
+    [_backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [_bView addSubview:_backBtn];
+}
+
+- (void)addRadarView
+{
+    _radarView = [[TNRadarView alloc] initWithFrame:CGRectMake(kMainScreenWidth - 65, 20, 62, 62)];
+    [_bView addSubview:_radarView];
+    
+    self.delegate = _radarView;
+}
+
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)changeCameraStatus:(id)sender
 {
     UISwitch *sw = (UISwitch *)sender;
@@ -163,16 +184,6 @@
         [self.session startRunning];
         self.bView.backgroundColor = [UIColor clearColor];
     }
-}
-
-- (AVCaptureVideoOrientation)avOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation
-{
-    AVCaptureVideoOrientation result = (AVCaptureVideoOrientation)deviceOrientation;
-    if ( deviceOrientation == UIDeviceOrientationLandscapeLeft )
-        result = AVCaptureVideoOrientationLandscapeRight;
-    else if ( deviceOrientation == UIDeviceOrientationLandscapeRight )
-        result = AVCaptureVideoOrientationLandscapeLeft;
-    return result;
 }
 
 @end

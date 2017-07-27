@@ -16,6 +16,7 @@
 		EF3727711F218F7F00A852D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF37276F1F218F7F00A852D5 /* LaunchScreen.storyboard */; };
 		EF37277C1F218F8000A852D5 /* TNMapDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF37277B1F218F8000A852D5 /* TNMapDemoTests.m */; };
 		EF3727871F218F8000A852D5 /* TNMapDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3727861F218F8000A852D5 /* TNMapDemoUITests.m */; };
+		EF74E9CD1F29723800F487DA /* TNRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF74E9CC1F29723800F487DA /* TNRadarView.m */; };
 		EFF8F4DC1F25D2AA00630152 /* ARPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,8 @@
 		EF3727821F218F8000A852D5 /* TNMapDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TNMapDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3727861F218F8000A852D5 /* TNMapDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TNMapDemoUITests.m; sourceTree = "<group>"; };
 		EF3727881F218F8000A852D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF74E9CB1F29723800F487DA /* TNRadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TNRadarView.h; sourceTree = "<group>"; };
+		EF74E9CC1F29723800F487DA /* TNRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TNRadarView.m; sourceTree = "<group>"; };
 		EFF8F4DA1F25D2AA00630152 /* ARPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARPlayViewController.h; sourceTree = "<group>"; };
 		EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARPlayViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +137,8 @@
 				EF3727681F218F7F00A852D5 /* ViewController.m */,
 				EFF8F4DA1F25D2AA00630152 /* ARPlayViewController.h */,
 				EFF8F4DB1F25D2AA00630152 /* ARPlayViewController.m */,
+				EF74E9CB1F29723800F487DA /* TNRadarView.h */,
+				EF74E9CC1F29723800F487DA /* TNRadarView.m */,
 				EF37276A1F218F7F00A852D5 /* Main.storyboard */,
 				EF37276D1F218F7F00A852D5 /* Assets.xcassets */,
 				EF37276F1F218F7F00A852D5 /* LaunchScreen.storyboard */,
@@ -360,6 +365,7 @@
 				EFF8F4DC1F25D2AA00630152 /* ARPlayViewController.m in Sources */,
 				EF3727661F218F7F00A852D5 /* AppDelegate.m in Sources */,
 				EF3727631F218F7F00A852D5 /* main.m in Sources */,
+				EF74E9CD1F29723800F487DA /* TNRadarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
