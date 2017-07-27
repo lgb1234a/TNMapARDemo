@@ -12,7 +12,7 @@
 @interface TNRadarView()
 
 @property (nonatomic, strong) UIImageView *radarBackImgView;
-@property (nonatomic, strong) UIView *dotView;
+@property (nonatomic, strong) UIImageView *radarImgView;
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 
@@ -26,13 +26,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         _radarBackImgView = [[UIImageView alloc] initWithFrame:CGRectMake(.0f, .0f, frame.size.width, frame.size.height)];
-        _radarBackImgView.image = [UIImage imageNamed:@"radarBackImg.png"];
+        _radarBackImgView.image = [UIImage imageNamed:@"canvas1.png"];
         [self addSubview:_radarBackImgView];
         
-        _dotView = [[UIView alloc] initWithFrame:CGRectMake(31.0f, 15.0f, 2.0f, 2.0f)];
-        _dotView.layer.cornerRadius = 1.0f;
-        _dotView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:_dotView];
+        _radarImgView = [[UIImageView alloc] initWithFrame:CGRectMake(.0f, .0f, frame.size.width, frame.size.height)];
+        _radarImgView.image = [UIImage imageNamed:@"canvas2.png"];
+        [self addSubview:_radarImgView];
         
         [self configCoreMotionManager];
     }
@@ -59,12 +58,23 @@
 
 - (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion
 {
-    NSLog(@"roll角度：%.4f, pitch角度：%.4f, yaw角度：%.4f", DEGREES(motion.attitude.roll), DEGREES(motion.attitude.pitch), DEGREES(motion.attitude.yaw));
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // 重力在y轴上分量最大，说明设备越接近竖直状态
+
+        CMQuaternion quat = motion.attitude.quaternion;
+//        NSLog(@"roll角度：%.4f, pitch角度：%.4f, yaw角度：%.4f", DEGREES(motion.attitude.roll), DEGREES(motion.attitude.pitch), DEGREES(motion.attitude.yaw));
+//    
+//        NSLog(@"%.4f, %.4f, %.4f %.4f", DEGREES(motion.attitude.quaternion.x), DEGREES(motion.attitude.quaternion.y), DEGREES(motion.attitude.quaternion.z), DEGREES(motion.attitude.quaternion.w));
+        
+        double x = (quat.x * quat.y + quat.w * quat.z);
+        double myYaw = 2 * x * M_PI;
+//        double myYaw = asin(2*(quat.x*quat.z - quat.w*quat.y));
+        
+        NSLog(@"%.4f", x);
         // yaw角度为零的时候，就是出生点位置
         self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-        self.radarBackImgView.transform = CGAffineTransformMakeRotation(motion.attitude.yaw);
+        self.radarBackImgView.transform = CGAffineTransformMakeRotation(myYaw);
     });
 }
 
