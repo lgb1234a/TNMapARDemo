@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "TNRadarView.h"
 
-@interface ARPlayViewController ()
+@interface ARPlayViewController () <TNRadarViewDelegate>
 
 /**
  *  AVCaptureSession对象来执行输入设备和输出设备之间的数据传递
@@ -28,11 +28,16 @@
 @property (nonatomic, strong) UIView *bView;
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) TNRadarView *radarView;
+// 用来放置游戏对象的
+@property (nonatomic, strong) UIScrollView *backScrollView;
+@property (nonatomic, strong) UIButton *logoBtn;
 
 @end
 #define kMainScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 
+// 单位角度对应的屏幕宽度+两倍物体宽度
+#define kWidthToTheta ([UIScreen mainScreen].bounds.size.width + 640) / M_PI_2
 @implementation ARPlayViewController
 
 - (void)viewDidLoad {
@@ -43,6 +48,7 @@
     [self addSwitchButton];
     [self addBackButton];
     [self addRadarView];
+    [self addScrollView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -120,6 +126,24 @@
 {
     _radarView = [[TNRadarView alloc] initWithFrame:CGRectMake(kMainScreenWidth - 65, 20, 62, 62)];
     [_bView addSubview:_radarView];
+    
+    _radarView.delegate = self;
+}
+
+- (void)addScrollView
+{
+    // 当前屏幕角度是90°，所以对应的完整旋转一圈的大小360°的宽度就是4倍的屏幕宽度
+    CGFloat wholeWidth = 4 * kMainScreenWidth;
+    _backScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _backScrollView.contentSize = CGSizeMake(wholeWidth, 0);
+    
+    _logoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_logoBtn setImage:[UIImage imageNamed:@"testImg.png"] forState:UIControlStateNormal];
+    CGFloat originAngle = atan2(16.0f, 9.0f) - M_PI_4;
+    _logoBtn.frame = CGRectMake(originAngle * kWidthToTheta + 320, 150, 320, 200);
+    
+    [_bView addSubview:_backScrollView];
+    [_backScrollView addSubview:_logoBtn];
 }
 
 - (void)back
@@ -156,6 +180,11 @@
         [self.session startRunning];
         self.bView.backgroundColor = [UIColor clearColor];
     }
+}
+
+- (void)updateRadarDataWithDeviceYaw:(double)yaw
+{
+    _backScrollView.contentOffset = CGPointMake(-yaw * kWidthToTheta, 0);
 }
 
 @end

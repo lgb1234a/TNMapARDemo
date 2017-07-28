@@ -52,12 +52,12 @@
         __weak typeof(self) weafSelf = self;
         [self.motionManager startDeviceMotionUpdatesToQueue:queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
             // 首先这里是在一个异步线程，要刷新UI操作的话，需要回到主线程。
-            [weafSelf updateRadarStatuWithDeviceMotion:motion];
+            [weafSelf updateRadarStatusWithDeviceMotion:motion];
         }];
     }
 }
 
-- (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion
+- (void)updateRadarStatusWithDeviceMotion:(CMDeviceMotion *)motion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
 
@@ -71,6 +71,13 @@
         // yaw角度为零的时候，就是出生点位置
         self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
         self.radarBackImgView.transform = CGAffineTransformMakeRotation(yaw);
+        
+        if(self.delegate && [self.delegate respondsToSelector:@selector(updateRadarDataWithDeviceYaw:)])
+        {
+            [self.delegate updateRadarDataWithDeviceYaw:yaw];
+        }
+        
+        NSLog(@"%.4f", yaw);
     });
 }
 

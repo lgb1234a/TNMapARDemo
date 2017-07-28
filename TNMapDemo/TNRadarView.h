@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TNRadarView : UIView 
+@class CMDeviceMotion;
+@protocol TNRadarViewDelegate
+
+- (void)updateRadarDataWithDeviceYaw:(double)yaw;
+
+@end
+
+@interface TNRadarView : UIView
+
+@property (nonatomic, weak) id delegate;
 
 @end
