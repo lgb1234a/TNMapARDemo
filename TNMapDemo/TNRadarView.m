@@ -69,12 +69,17 @@
         
         double x = (quat.x * quat.y + quat.w * quat.z);
         double myYaw = 2 * x * M_PI;
+        
+        double ysqr = quat.y * quat.y;
+        double t3 = 2.0 * (quat.w * quat.z + quat.x * quat.y);
+        double t4 = 1.0 - 2.0 * (ysqr + quat.z * quat.z);
+        double yaw = atan2(t3, t4);
 //        double myYaw = asin(2*(quat.x*quat.z - quat.w*quat.y));
         
-        NSLog(@"%.4f", x);
+        NSLog(@"%.4f  %.4f", x, yaw);
         // yaw角度为零的时候，就是出生点位置
         self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-        self.radarBackImgView.transform = CGAffineTransformMakeRotation(myYaw);
+        self.radarBackImgView.transform = CGAffineTransformMakeRotation(yaw);
     });
 }
 
