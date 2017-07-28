@@ -51,6 +51,7 @@
         //Push方式获取和处理数据
         __weak typeof(self) weafSelf = self;
         [self.motionManager startDeviceMotionUpdatesToQueue:queue withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
+            // 首先这里是在一个异步线程，要刷新UI操作的话，需要回到主线程。
             [weafSelf updateRadarStatuWithDeviceMotion:motion];
         }];
     }
@@ -59,24 +60,14 @@
 - (void)updateRadarStatuWithDeviceMotion:(CMDeviceMotion *)motion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        // 重力在y轴上分量最大，说明设备越接近竖直状态
 
         CMQuaternion quat = motion.attitude.quaternion;
-//        NSLog(@"roll角度：%.4f, pitch角度：%.4f, yaw角度：%.4f", DEGREES(motion.attitude.roll), DEGREES(motion.attitude.pitch), DEGREES(motion.attitude.yaw));
-//    
-//        NSLog(@"%.4f, %.4f, %.4f %.4f", DEGREES(motion.attitude.quaternion.x), DEGREES(motion.attitude.quaternion.y), DEGREES(motion.attitude.quaternion.z), DEGREES(motion.attitude.quaternion.w));
-        
-        double x = (quat.x * quat.y + quat.w * quat.z);
-        double myYaw = 2 * x * M_PI;
         
         double ysqr = quat.y * quat.y;
         double t3 = 2.0 * (quat.w * quat.z + quat.x * quat.y);
         double t4 = 1.0 - 2.0 * (ysqr + quat.z * quat.z);
         double yaw = atan2(t3, t4);
-//        double myYaw = asin(2*(quat.x*quat.z - quat.w*quat.y));
         
-        NSLog(@"%.4f  %.4f", x, yaw);
         // yaw角度为零的时候，就是出生点位置
         self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
         self.radarBackImgView.transform = CGAffineTransformMakeRotation(yaw);
