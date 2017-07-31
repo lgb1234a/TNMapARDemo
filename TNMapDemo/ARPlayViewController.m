@@ -10,6 +10,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import "TNRadarView.h"
 
+typedef enum : NSUInteger {
+    TNOutSideTypeTop = 0,
+    TNOutSideTypeLeft,
+    TNOutSideTypeBottom,
+    TNOutSideTypeRight,
+} TNOutSideType;
+
 @interface ARPlayViewController () <TNRadarViewDelegate>
 
 /**
@@ -198,7 +205,43 @@
     if(!CGRectIntersectsRect(self.view.bounds, frame))
     {
         // 在屏幕外，提示用户
-        
+        switch ([self outSideJudgeWithOutRect:frame toRect:self.view.bounds]) {
+            case TNOutSideTypeLeft:
+                NSLog(@"请往左侧移动");
+                break;
+            case TNOutSideTypeRight:
+                NSLog(@"请往右侧移动");
+                break;
+            case TNOutSideTypeTop:
+                NSLog(@"请往上方移动");
+                break;
+            case TNOutSideTypeBottom:
+                NSLog(@"请往下方移动");
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+- (TNOutSideType)outSideJudgeWithOutRect:(CGRect)outSideRect toRect:(CGRect)currentRect
+{
+    if(CGRectGetMaxX(outSideRect) < CGRectGetMinX(currentRect))
+    {
+        return TNOutSideTypeLeft;
+    }else if (CGRectGetMinX(outSideRect) > CGRectGetMaxX(currentRect))
+    {
+        return TNOutSideTypeRight;
+    }else if (CGRectGetMinY(outSideRect) > CGRectGetMaxY(currentRect))
+    {
+        return TNOutSideTypeBottom;
+    }else if (CGRectGetMaxY(outSideRect) < CGRectGetMinY(currentRect))
+    {
+        return TNOutSideTypeTop;
+    }else
+    {
+        return -1;
     }
 }
 

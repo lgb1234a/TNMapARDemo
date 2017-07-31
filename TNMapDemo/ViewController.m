@@ -69,7 +69,7 @@
     {
         if([_circle setCircleWithCenterCoordinate:_mapView.userLocation.location.coordinate radius:1000])
         {
-            NSLog(@"刷新定位圈失败");
+//            NSLog(@"刷新定位圈失败");
         }
     }
 }
