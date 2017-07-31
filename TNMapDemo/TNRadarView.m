@@ -38,6 +38,7 @@
     return self;
 }
 
+// 初始化陀螺仪
 - (void)configCoreMotionManager
 {
     //初始化全局管理对象
@@ -57,6 +58,7 @@
     }
 }
 
+// motion换算成旋转角度
 - (void)updateRadarStatusWithDeviceMotion:(CMDeviceMotion *)motion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -84,14 +86,5 @@
         }
     });
 }
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

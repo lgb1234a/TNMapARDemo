@@ -49,6 +49,7 @@ typedef enum : NSUInteger {
 
 @implementation ARPlayViewController
 
+#pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -81,32 +82,12 @@ typedef enum : NSUInteger {
     
 }
 
-
-- (void)initAVCaptureSession{
-    
-    self.session = [[AVCaptureSession alloc] init];
-    
-    NSError *error;
-    
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:device error:&error];
-    if (error) {
-        NSLog(@"%@",error);
-    }
-    
-    if ([self.session canAddInput:self.videoInput]) {
-        [self.session addInput:self.videoInput];
-    }
-    
-    //初始化预览图层
-    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.previewLayer.frame = self.view.bounds;
-    self.view.layer.masksToBounds = YES;
-    [self.view.layer addSublayer:self.previewLayer];
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - UI
 - (void)addBackView
 {
     _bView = [UIView new];
@@ -158,11 +139,34 @@ typedef enum : NSUInteger {
     [_backScrollView addSubview:_logoBtn];
 }
 
-- (void)back
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+#pragma mark - 相机操作
+- (void)initAVCaptureSession{
+    
+    self.session = [[AVCaptureSession alloc] init];
+    
+    NSError *error;
+    
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:device error:&error];
+    if (error) {
+        NSLog(@"%@",error);
+    }
+    
+    if ([self.session canAddInput:self.videoInput]) {
+        [self.session addInput:self.videoInput];
+    }
+    
+    //初始化预览图层
+    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    self.previewLayer.frame = self.view.bounds;
+    self.view.layer.masksToBounds = YES;
+    [self.view.layer addSublayer:self.previewLayer];
 }
 
+// 开关相机
 - (void)changeCameraStatus:(id)sender
 {
     UISwitch *sw = (UISwitch *)sender;
@@ -179,7 +183,6 @@ typedef enum : NSUInteger {
 - (void)stopCapture
 {
     if (self.session) {
-        
         [self.session stopRunning];
         self.bView.backgroundColor = [UIColor lightGrayColor];
     }
@@ -188,20 +191,20 @@ typedef enum : NSUInteger {
 - (void)startCapture
 {
     if (self.session) {
-        
         [self.session startRunning];
         self.bView.backgroundColor = [UIColor clearColor];
     }
 }
 
+#pragma mark - 模拟AR
+// 刷新雷达的检测方位
 - (void)updateRadarDataWithDeviceYaw:(double)yaw andRoll:(double)roll
 {
-    double offset = (M_PI_2 - roll) * kHeightToTheta;
-
-    _backScrollView.contentOffset = CGPointMake(- yaw * kWidthToTheta, offset);
+    double offsetX = - yaw * kWidthToTheta;
+    double offsetY = (M_PI_2 - roll) * kHeightToTheta;
+    _backScrollView.contentOffset = CGPointMake(offsetX, offsetY);
     
     CGRect frame = [_logoBtn convertRect:_logoBtn.bounds toView:self.view];
-    
     if(!CGRectIntersectsRect(self.view.bounds, frame))
     {
         // 在屏幕外，提示用户
@@ -225,6 +228,7 @@ typedef enum : NSUInteger {
     }
 }
 
+// 判断牛牛方位
 - (TNOutSideType)outSideJudgeWithOutRect:(CGRect)outSideRect toRect:(CGRect)currentRect
 {
     if(CGRectGetMaxX(outSideRect) < CGRectGetMinX(currentRect))

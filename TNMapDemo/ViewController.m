@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
     ///地图需要v4.5.0及以上版本才必须要打开此选项（v4.5.0以下版本，需要手动配置info.plist）
     [AMapServices sharedServices].enableHTTPS = YES;
     
@@ -47,15 +48,10 @@
     pointAnnotation.subtitle = @"阜通东大街6号";
     
     [_mapView addAnnotation:pointAnnotation];
-    
-//    [_mapView addAnnotations:@[pointAnnotation]];
 }
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
 {
-//    NSLog(@"mapView返回的定位信息 %lf ---  %lf", _mapView.userLocation.location.coordinate.longitude, _mapView.userLocation.location.coordinate.latitude);
-//    NSLog(@"代理方法返回的位置信息 %lf --- %lf", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
-    
     if(!_circle)
     {
         //构造圆
