@@ -47,10 +47,11 @@
     // Do any additional setup after loading the view.
     
     [self initAVCaptureSession];
+    [self addBackView];
+    [self addScrollView];
     [self addSwitchButton];
     [self addBackButton];
     [self addRadarView];
-    [self addScrollView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -99,20 +100,22 @@
     [self.view.layer addSublayer:self.previewLayer];
 }
 
-- (void)addSwitchButton
+- (void)addBackView
 {
     _bView = [UIView new];
-    
+    _bView.backgroundColor = [UIColor clearColor];
+    _bView.frame = self.view.bounds;
+    [self.view addSubview:_bView];
+}
+
+- (void)addSwitchButton
+{
     UISwitch *switchBtn = [[UISwitch alloc] init];
     switchBtn.frame = CGRectMake(kMainScreenWidth - 60, kMainScreenHeight - 60, 60, 30);
     [switchBtn setOn:YES];
     
     [switchBtn addTarget:self action:@selector(changeCameraStatus:) forControlEvents:UIControlEventTouchUpInside];
     [_bView addSubview:switchBtn];
-    
-    _bView.backgroundColor = [UIColor clearColor];
-    _bView.frame = self.view.bounds;
-    [self.view addSubview:_bView];
 }
 
 - (void)addBackButton
@@ -187,8 +190,16 @@
 - (void)updateRadarDataWithDeviceYaw:(double)yaw andRoll:(double)roll
 {
     double offset = (M_PI_2 - roll) * kHeightToTheta;
-    NSLog(@"%.4f", offset);
+
     _backScrollView.contentOffset = CGPointMake(- yaw * kWidthToTheta, offset);
+    
+    CGRect frame = [_logoBtn convertRect:_logoBtn.bounds toView:self.view];
+    
+    if(!CGRectIntersectsRect(self.view.bounds, frame))
+    {
+        // 在屏幕外，提示用户
+        
+    }
 }
 
 @end

@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) MAMapView *mapView;
 
+@property (nonatomic, strong) MACircle *circle;
+
 @end
 
 @implementation ViewController
@@ -54,13 +56,22 @@
 //    NSLog(@"mapView返回的定位信息 %lf ---  %lf", _mapView.userLocation.location.coordinate.longitude, _mapView.userLocation.location.coordinate.latitude);
 //    NSLog(@"代理方法返回的位置信息 %lf --- %lf", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
     
-    //构造圆
-    MACircle *circle = [MACircle circleWithCenterCoordinate:_mapView.userLocation.location.coordinate radius:1000];
-    
-    //在地图上添加圆
-    [_mapView addOverlay: circle];
-    
-    [self addAnnotations];
+    if(!_circle)
+    {
+        //构造圆
+        _circle = [MACircle circleWithCenterCoordinate:_mapView.userLocation.location.coordinate radius:1000];
+        
+        //在地图上添加圆
+        [_mapView addOverlay:_circle];
+        
+        [self addAnnotations];
+    }else
+    {
+        if([_circle setCircleWithCenterCoordinate:_mapView.userLocation.location.coordinate radius:1000])
+        {
+            NSLog(@"刷新定位圈失败");
+        }
+    }
 }
 
 
