@@ -11,7 +11,7 @@
 @class CMDeviceMotion;
 @protocol TNRadarViewDelegate
 
-- (void)updateRadarDataWithDeviceYaw:(double)yaw;
+- (void)updateRadarDataWithDeviceYaw:(double)yaw andRoll:(double)roll;
 
 @end
 

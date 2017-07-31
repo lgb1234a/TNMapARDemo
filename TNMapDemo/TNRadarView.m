@@ -72,12 +72,16 @@
         self.radarBackImgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
         self.radarBackImgView.transform = CGAffineTransformMakeRotation(yaw);
         
-        if(self.delegate && [self.delegate respondsToSelector:@selector(updateRadarDataWithDeviceYaw:)])
-        {
-            [self.delegate updateRadarDataWithDeviceYaw:yaw];
-        }
         
-        NSLog(@"%.4f", yaw);
+        // roll (x-axis rotation)
+        double t0 = 2.0 * (quat.w * quat.x + quat.y * quat.z);
+        double t1 = 1.0 - 2.0 * (quat.x * quat.x + ysqr);
+        double roll = atan2(t0, t1);
+        
+        if(self.delegate && [self.delegate respondsToSelector:@selector(updateRadarDataWithDeviceYaw:andRoll:)])
+        {
+            [self.delegate updateRadarDataWithDeviceYaw:yaw andRoll:roll];
+        }
     });
 }
 

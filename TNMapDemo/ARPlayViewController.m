@@ -38,6 +38,8 @@
 
 // 单位角度对应的屏幕宽度+两倍物体宽度
 #define kWidthToTheta ([UIScreen mainScreen].bounds.size.width + 640) / M_PI_2
+#define kHeightToTheta ([UIScreen mainScreen].bounds.size.height + 400) / M_PI_2
+
 @implementation ARPlayViewController
 
 - (void)viewDidLoad {
@@ -182,9 +184,11 @@
     }
 }
 
-- (void)updateRadarDataWithDeviceYaw:(double)yaw
+- (void)updateRadarDataWithDeviceYaw:(double)yaw andRoll:(double)roll
 {
-    _backScrollView.contentOffset = CGPointMake(-yaw * kWidthToTheta, 0);
+    double offset = (M_PI_2 - roll) * kHeightToTheta;
+    NSLog(@"%.4f", offset);
+    _backScrollView.contentOffset = CGPointMake(- yaw * kWidthToTheta, offset);
 }
 
 @end
